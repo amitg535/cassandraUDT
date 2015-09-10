@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Assigned Responsibilities to Functions</title>
+</head>
+<body>
+	<h1>Functions Responsibility</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Functions</th>
+				<th>Functions Responsibility</th>
+				<th>Peoples Responsibility</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="function : ${functionsResponsibility}">
+				<td th:text="${function.function_code}">smr</td>
+				<td>
+					<table>
+						<tbody>
+							<tr th:each="item : ${function.functions_responsibility}">
+								<td th:text="${item}">Senior Manager</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<td>
+					<table>
+						<tbody>
+							<tr th:each="people : ${function.assigned_responsibilities}">
+								<td th:text="${people.name}">Senior Manager</td>
+								<td>
+									<table>
+										<tbody>
+											<tr th:each="item : ${people.responsibility}">
+												<td th:text="${item}">Senior Manager</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<form action="#" th:action="@{/assign/assignmentANDallocation}" th:object="${funcResp}" method="post">
+         <select th:field="*{prescribedFunctions}">
+  <option th:each="item : ${prescribedFunctions}" 
+          th:value="${item.code}" 
+          th:text="${item.name}">Wireframe</option>
+</select>
+</form>
+	
+	<a href="home.html" th:href="@{/home}">Home</a>
+			
+</body>
+</html>

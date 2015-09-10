@@ -1,0 +1,10 @@
+build/
+bin/
+.class
+.settings/
+.classpath
+.project
+.metadata/
+.externalToolBuilders/
+tmp/
+target/

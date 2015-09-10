@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Classification Added!</title>
+    </head>
+    <body>
+        <h1>Classification List</h1>
+        <table>
+        <tr>
+        <th>Code</th>
+        <th>Classification_Name</th>
+        </tr>
+        <tr th:each="classification : ${allClassifications}">
+        <td th:text = "${classification.code}" >smr</td>
+         <td th:text = "${classification.classification_name}" >Senior Manager</td>
+        </tr>
+       
+        </table>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>HR Firm Setup Page</title>
+</head>
+<body>
+	<p th:text="#{firmSetup.option}">Choose an option to setup your firm</p>
+	<ol>
+		<li><a href="addRole.html" th:href="@{/setup/addRole}"
+			th:text="#{firmSetup.addRole}">Add Role</a></li>
+		<li><a href="addClassification.html"
+			th:href="@{/addClassification}"
+			th:text="#{firmSetup.addClassification}">Add Classification</a></li>
+		<li><a href="addFunction.html"
+			th:href="@{/setup/addFunction}" th:text="#{firmSetup.addFunction}">Add
+				Prescribed Function</a></li>
+		<li><a href="addResponsibility.html"
+			th:href="@{/setup/addResponsibility}"
+			th:text="#{firmSetup.addResponsibility}">Add Responsibilities</a></li>
+				
+	</ol>
+	
+	
+<a href="home.html" th:href="@{/home}">Home</a>	
+</body>
+</html>

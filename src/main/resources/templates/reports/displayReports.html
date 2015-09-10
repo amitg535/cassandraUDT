@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>HR Reports Page</title>
+</head>
+<body>
+	<p th:text="#{displayReports.option}">Please choose an Report to view</p>
+	<ol>
+		<li><a href="reports/showReports.html"
+			th:href="@{/reports/orgChart}"
+			th:text="#{displayReports.orgChart}">Display Organization Chart</a></li>				
+	</ol>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>HR Home Page</title>
+</head>
+<body>
+	<p th:text="#{home.welcome}">Welcome to AllSop Demo</p>
+	<p th:text="#{home.option}">Please select an option</p>
+	<ol>
+		<li><a href="setup/firmSetup.html" th:href="@{firmSetup}"
+			th:text="#{home.setup}">Firm Setup</a></li>
+		<li><a href="assign/assignmentANDallocation.html"
+			th:href="@{/assign/assignmentANDallocation}"
+			th:text="#{home.assign}">Assignment and Allocation</a></li>	
+		<li><a href="reports/displayReports.html"
+			th:href="@{/reports/displayReports}"
+			th:text="#{home.showReports}">Display Reports</a></li>
+					
+	</ol>
+</body>
+</html>

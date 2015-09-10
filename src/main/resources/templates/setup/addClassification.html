@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+     
+    <head>
+        <title>Add Classification!</title>
+    </head>
+    <body>
+        <p th:text="#{addClassification.welcome}">Welcome to AllSop Demo</p>
+         <form action="setup/classificationAdded.html" th:action="@{/classificationAdded}" th:object="${classification}" method="post">
+            <label th:label="#{addClassification.code}">Classification Code</label>
+            <input type="text" name="code" th:field="*{code}"/>
+             <label th:label="#{addClassification.name}">Classification Name</label>
+            <input tpe="text" name="classification_name" th:field="*{classification_name}"/>
+            <input type="submit" value="Add"/>
+        </form>
+        
+       <a href="setup/firmSetup.html" th:href="@{firmSetup}"
+			th:text="#{home.setup}">Firm Setup</a> 
+    </body>
+</html>

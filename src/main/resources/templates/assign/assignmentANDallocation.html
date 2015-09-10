@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>HR Assignment AND Allocation Page</title>
+</head>
+<body>
+	<p th:text="#{assignmentANDallocation.option}">Choose an option to either Assign Responsibility or Allocate People</p>
+	<ol>
+		<li><a href="assign/assignResponsibilities.html"
+			th:href="@{/assign/assignResponsibilities}"
+			th:text="#{assignmentANDallocation.assignResponsibilities}">Assign Responsibilities to Functions</a></li>	
+		<li><a href="assign/allocatePeople.html"
+			th:href="@{/assign/allocatePeople}"
+			th:text="#{assignmentANDallocation.allocatePeople}">Allocate People to Responsibilities</a></li>
+	</ol>
+</body>
+</html>
