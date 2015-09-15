@@ -1,14 +1,18 @@
 package smcr.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import smcr.command.Responsibility;
+import smcr.domain.Responsibility.ResponsibilityDom;
 import smcr.domain.functions.Applicable_FunctionsDom;
 import smcr.domain.functions.Prescribed_FunctionDom;
 import smcr.repository.nosql.ApplicableFunctionsDAO;
 import smcr.repository.nosql.PrescribedFunctionDAO;
+import smcr.repository.nosql.ResponsibilityDAO;
 
 
 @Service
@@ -19,6 +23,9 @@ public class FunctionResponsibilityService implements IFunctionResponsibilitySer
 	
 	@Autowired
 	PrescribedFunctionDAO prescribedFunctionDAO;
+	
+	@Autowired
+	ResponsibilityDAO responsibilityDAO;
 
 	@Override
 	public List<Applicable_FunctionsDom> showFunctionsResponsibilities() {
@@ -36,6 +43,30 @@ public class FunctionResponsibilityService implements IFunctionResponsibilitySer
 		
 		List<Prescribed_FunctionDom> prescribedFunctions = prescribedFunctionDAO.showPrescribedFunctions();
 		return prescribedFunctions;
+	}
+
+	@Override
+	public List<Responsibility> showPrescribedResponsibilities() {
+		
+		List<Responsibility> responsibilitiesCom = new ArrayList<Responsibility> ();
+		
+		List<ResponsibilityDom> responsibilitiesDom = responsibilityDAO.showPrescribedResponsibilities();
+		
+		for(ResponsibilityDom responsibility : responsibilitiesDom) {
+			
+			Responsibility resp = new Responsibility();
+			
+			resp.setCode(responsibility.getCode());
+			resp.setName(responsibility.getName());
+			resp.setIs_prescribed(responsibility.isIs_prescribed());
+			resp.setDescription(responsibility.getDescription());
+			resp.setComments(responsibility.getComments());
+			resp.setReg_body(responsibility.getReg_body());
+			
+			responsibilitiesCom.add(resp);
+		}
+		
+		return responsibilitiesCom;
 	}
 
 }

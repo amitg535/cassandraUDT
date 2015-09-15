@@ -1,11 +1,7 @@
-package smcr.domain.Responsibility;
+package smcr.command;
 
-import org.springframework.data.cassandra.mapping.PrimaryKey;
-import org.springframework.data.cassandra.mapping.Table;
-
-@Table(value="individual_responsibility")
-public class ResponsibilityDom {
-	@PrimaryKey(value="code")
+public class Responsibility {
+	
 	private String code;
     private String name;
 	private boolean is_prescribed;
@@ -14,18 +10,6 @@ public class ResponsibilityDom {
 	private String reg_body;
 	
 	
-	public ResponsibilityDom (String code, String name, boolean is_prescribed, String description,
-			String comments, String reg_body) {
-		
-		this.code = code;
-		this.name = name;
-		this.is_prescribed = is_prescribed;
-		this.description = description;
-		this.comments= comments;
-		this.reg_body = reg_body;
-	}
-	
-
 	public String getCode() {
 		return code;
 	}
@@ -62,5 +46,6 @@ public class ResponsibilityDom {
 	public void setReg_body(String reg_body) {
 		this.reg_body = reg_body;
 	}
+	
 
 }

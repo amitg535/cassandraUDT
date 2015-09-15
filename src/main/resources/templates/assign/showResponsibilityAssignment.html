@@ -48,15 +48,25 @@
 			</tr>
 		</tbody>
 	</table>
-	
-	<form action="#" th:action="@{/assign/assignmentANDallocation}" th:object="${funcResp}" method="post">
-         <select th:field="*{prescribedFunctions}">
-  <option th:each="item : ${prescribedFunctions}" 
-          th:value="${item.code}" 
-          th:text="${item.name}">Wireframe</option>
-</select>
-</form>
-	
+
+	<form action="#" th:action="@{/assign/assignmentANDallocation}"
+		th:object="${applicableFunc}" method="post">
+		<select th:field="*{function_code}">
+			<option th:each="function_code : ${prescribedFunctions}"
+				th:value="${function_code}" th:text="${function_code}">Wireframe</option>
+		</select>
+		<ul>
+			<li th:each="responsibility : ${responsibilities}">
+			<input type="checkbox"
+				th:field="*{functions_responsibility}" th:value="${responsibility.code}" />
+			<label th:for="${#ids.prev('functions_responsibility')}" 
+           th:text="${responsibility.name}">Heating</label>
+				 
+			</li>
+		</ul>
+
+	</form>
+
 	<a href="home.html" th:href="@{/home}">Home</a>
 			
 </body>
