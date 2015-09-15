@@ -6,13 +6,17 @@ import org.springframework.stereotype.Component;
 
 import com.datastax.driver.core.UDTValue;
 
-@Component
+
 public class Applicable_Functions {
 	
 	
 	private String function_code; 
     private Set<String> functions_responsibility;
     private Set<UDTValue> assigned_responsibilities; // set<frozen<people_responsibility>>
+    
+    public Applicable_Functions() {
+    	super();
+    }
 	
     public String getFunction_code() {
 		return function_code;
