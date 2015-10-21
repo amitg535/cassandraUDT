@@ -20,7 +20,7 @@ public class ClassificationDAO implements IClassificationDAO {
 	private CassandraOperations cassandraOperations;
 
 	@Override
-	public void addClassifications() throws Exception {
+	public void addClassifications(){ // throws Exception {
 		// TODO Auto-generated method stub
 		//insert into classification (code,classification_name)values ('ned', 'Non-Executive Director');
 		cassandraOperations.insert(new ClassificationsDom("aux","Auxillary"));

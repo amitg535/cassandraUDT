@@ -3,7 +3,6 @@ package smcr.repository.nosql;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -14,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
+import com.datastax.driver.core.Statement;
+import com.datastax.driver.core.querybuilder.*;
 import com.datastax.driver.core.UDTValue;
 import com.datastax.driver.mapping.MappingManager;
 import com.datastax.driver.mapping.UDTMapper;
@@ -80,6 +81,19 @@ public static final Logger Log = LoggerFactory.getLogger(ApplicableFunctionsDAO.
 		
 		
 		return allApplicableFunctions;
+	}
+
+	
+	@Override
+	public void updateFunctionsResponsibility(String function_code,
+			String responsibility) {
+		
+		String updateResponsibility = "UPDATE functions SET functions_responsibility = functions_responsibility + {'"+responsibility+"'} where function_code='"+function_code+"'";
+		/*final Statement updateResponsibility  = QueryBuilder.update("functions")
+				.with(QueryBuilder.set("functions_responsibility", responsibility))
+				.where(QueryBuilder.eq("function_code", function_code));*/
+		cassandraOperations.execute(updateResponsibility);
+		
 	}
 
 }

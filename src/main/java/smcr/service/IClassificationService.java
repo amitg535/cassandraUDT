@@ -2,6 +2,7 @@ package smcr.service;
 
 import java.util.List;
 
+import smcr.command.Classification;
 import smcr.domain.functions.ClassificationsDom;
 
 public interface IClassificationService {
@@ -13,5 +14,7 @@ public interface IClassificationService {
 	public ClassificationsDom showClassification();
 	
 	public List<ClassificationsDom> showClassifications();
+	
+	//public synchronized List<Classification> findAll(String stringFilter);
 
 }

@@ -68,10 +68,7 @@ public class AssignmentController {
 		return allResponsibilities;
 	}
 	
-	
-	
-	
-	@RequestMapping("assign/assignmentANDallocation")
+	@RequestMapping("assign/assignResponsibilities")
 	public String showAssignedResponsibility(Model model,@ModelAttribute("applicableFunc") Applicable_Functions applicableFunc) throws Exception {
 		
 		
@@ -87,6 +84,13 @@ public class AssignmentController {
 		//applicableFunc.setFunction_code("Select");
 		
 		return "/assign/showResponsibilityAssignment";
+	}
+	
+	
+	@RequestMapping("assign/assignmentANDallocation")
+	public String assignANDallocate() throws Exception {
+		
+		return "/assign/assignmentANDallocation";
 	}
 	
 	

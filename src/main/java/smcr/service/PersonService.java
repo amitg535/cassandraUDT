@@ -1,5 +1,7 @@
 package smcr.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,12 @@ public class PersonService implements IPersonService {
 
 	@Override
 	public PersonDom showPerson() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<PersonDom> showAllPersons() {
 		// TODO Auto-generated method stub
 		return null;
 	}

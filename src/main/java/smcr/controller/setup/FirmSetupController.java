@@ -1,20 +1,22 @@
 package smcr.controller.setup;
 
-import java.sql.SQLException;
+
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.QueryTimeoutException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.datastax.driver.core.exceptions.NoHostAvailableException;
 
 import smcr.command.Classification;
 import smcr.domain.functions.ClassificationsDom;
@@ -26,6 +28,7 @@ public class FirmSetupController {
 
 	public static final Logger LOG = LoggerFactory.getLogger(FirmSetupController.class);
 	
+		
 	@Autowired
 	ClassificationService classificationService;
 	
@@ -49,10 +52,16 @@ public class FirmSetupController {
 	}
 	
 	@RequestMapping("/classificationAdded")
-	public String classificationAdded(Classification classification, Model model) throws Exception {
+	public String classificationAdded(@Valid Classification classification,BindingResult bindingResult, Model model) throws Exception {
+		
+		if(bindingResult.hasErrors()) {
+			return "setup/addClassification";
+		}
 
 		String code = classification.getCode();
 		String classification_name = classification.getClassification_name();
+		
+		if(classification_name.equals("amit") ) throw new Exception();
 		
 		classificationService.addClassification(code,classification_name);
 		List<ClassificationsDom> allClassifications =classificationService.showClassifications();
@@ -101,11 +110,11 @@ public class FirmSetupController {
 	 * @throws DataIntegrityViolationException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/dataIntegrityViolation")
+	/*@RequestMapping("/dataIntegrityViolation")
 	String throwDataIntegrityViolationException() throws SQLException {
 		LOG.info("Throw DataIntegrityViolationException");
 		throw new DataIntegrityViolationException("Duplicate id");
-	}
+	}*/
 	
 	/**
 	 * Simulates a database exception by always throwing <tt>SQLException</tt>.
@@ -115,11 +124,11 @@ public class FirmSetupController {
 	 * @throws SQLException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/databaseError1")
+	/*@RequestMapping("/databaseError1")
 	String throwDatabaseException1() throws SQLException {
 		LOG.info("Throw SQLException");
 		throw new SQLException();
-	}
+	}*/
 
 	/**
 	 * Simulates a database exception by always throwing
@@ -129,11 +138,11 @@ public class FirmSetupController {
 	 * @throws DataAccessException
 	 *             Always thrown.
 	 */
-	@RequestMapping("/databaseError2")
+	/*@RequestMapping("/databaseError2")
 	String throwDatabaseException2() throws QueryTimeoutException {
 		LOG.info("Throw DataAccessException");
 		throw new QueryTimeoutException("Error accessing database");
-	}
+	}*/
 
 	/**
 	 * Always throws a <tt>SupportInfoException</tt>. Must be caught by an
@@ -155,76 +164,31 @@ public class FirmSetupController {
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 	/* . . . . . . . . . . . . . EXCEPTION HANDLERS . . . . . . . . . . . . .. */
 	/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-	/**
-	 * Convert a predefined exception to an HTTP Status code
-	 */
-	@ResponseStatus(value = HttpStatus.CONFLICT, reason = "Data integrity violation")
-	// 409
-	@ExceptionHandler(DataIntegrityViolationException.class)
-	public void conflict() {
-		LOG.error("Request raised a DataIntegrityViolationException");
-		// Nothing to do
-	}
 	
-	/**
-	 * Convert a predefined exception to an HTTP Status code and specify the
-	 * name of a specific view that will be used to display the error.
-	 * 
-	 * @return Exception view.
-	 */
-	@ExceptionHandler({ SQLException.class, QueryTimeoutException.class })
-	public String databaseError(Exception exception) {
-		// Nothing to do. Return value 'databaseError' used as logical view name
-		// of an error page, passed to view-resolver(s) in usual way.
-		LOG.error("Request raised " + exception.getClass().getSimpleName());
-		return "databaseError";
-	}
 	
-	/**
-	 * Demonstrates how to take total control - setup a model, add useful
-	 * information and return the "support" view name. This method explicitly
-	 * creates and returns
-	 * 
-	 * @param req
-	 *            Current HTTP request.
-	 * @param exception
-	 *            The exception thrown - always {@link SupportInfoException}.
-	 * @return The model and view used by the DispatcherServlet to generate
-	 *         output.
-	 * @throws Exception
-	 */
-/*	@ExceptionHandler(SupportInfoException.class)
-	public ModelAndView handleError(HttpServletRequest req, Exception exception)
-			throws Exception {
+	@ExceptionHandler(NoHostAvailableException.class)
+	public ModelAndView dataBaseError(HttpServletRequest req, Exception exception) {
+		 LOG.error("Request: " + req.getRequestURL() + " raised " + exception);
+		 ModelAndView mav = new ModelAndView();
+		    mav.addObject("exception", exception);
+		    mav.addObject("url", req.getRequestURL());
+		    mav.setViewName("databaseError");
+		    return mav;
 
-		// Rethrow annotated exceptions or they will be processed here instead.
-		if (AnnotationUtils.findAnnotation(exception.getClass(),
-				ResponseStatus.class) != null)
-			throw exception;
-
-		LOG.error("Request: " + req.getRequestURI() + " raised " + exception);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("exception", exception);
-		mav.addObject("url", req.getRequestURL());
-		mav.addObject("timestamp", new Date().toString());
-		mav.addObject("status", 500);
-
-		mav.setViewName("support");
-		return mav;
-	} */
-	
-	/*@ExceptionHandler(Exception.class)
-	public ModelAndView POCError(HttpServletRequest req, Exception exception) {
 		
-		LOG.error("Request: " + req.getRequestURL() + " raised " + exception);
+	 	
+	}
+	
+	@ExceptionHandler(Exception.class)
+	  public ModelAndView handleError(HttpServletRequest req, Exception exception) {
+	    LOG.error("Request: " + req.getRequestURL() + " raised " + exception);
 
 	    ModelAndView mav = new ModelAndView();
-	    mav.addObject("message", exception.getMessage());
-	    mav.addObject("error", exception.toString());
-	    mav.addObject("status", req.getRequestURL());
+	    mav.addObject("exception", exception);
+	    mav.addObject("url", req.getRequestURL());
 	    mav.setViewName("error");
 	    return mav;
-	}*/
-}
+	  }
+
+
+}	

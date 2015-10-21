@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
         <title>Classification Added!</title>
+         <link rel="stylesheet" type="text/css" media="all" href="../../static/css/smcr.css" th:href="@{/css/smcr.css}"/>
     </head>
     <body>
         <h1>Classification List</h1>
@@ -15,7 +16,19 @@
         <td th:text = "${classification.code}" >smr</td>
          <td th:text = "${classification.classification_name}" >Senior Manager</td>
         </tr>
-       
+        <tr th:remove="all">
+          <td>hcm</td>
+           <td>HR Manager</td>
+         </tr> 
+          <tr th:remove="all">
+          <td>tech</td>
+           <td>Tech Support</td>
+         </tr> 
         </table>
+        
+          <a href="addClassification.html" th:href="@{addClassification}"
+			th:text="#{home.back}">Back</a> 
+		
+		 <a href="../home.html" th:href="@{/home}" th:text="#{home.homeLink}">Home</a>	 
     </body>
 </html>

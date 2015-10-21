@@ -3,18 +3,24 @@
      
     <head>
         <title>Add Classification!</title>
+         <link rel="stylesheet" type="text/css" media="all" href="../../static/css/smcr.css" th:href="@{/css/smcr.css}"/>
     </head>
     <body>
         <p th:text="#{addClassification.welcome}">Welcome to AllSop Demo</p>
-         <form action="setup/classificationAdded.html" th:action="@{/classificationAdded}" th:object="${classification}" method="post">
-            <label th:label="#{addClassification.code}">Classification Code</label>
-            <input type="text" name="code" th:field="*{code}"/>
-             <label th:label="#{addClassification.name}">Classification Name</label>
-            <input tpe="text" name="classification_name" th:field="*{classification_name}"/>
+     
+         <form action="classificationAdded.html" th:action="@{/classificationAdded}" th:object="${classification}" method="post">
+             <ul th:if="${#fields.hasErrors('*')}" class="errorlist">
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+          </ul>
+            <label th:text="#{addClassification.code}">Classification Code</label>
+            <input type="text" name="code" th:field="*{code}" th:errorclass="fieldError"/>
+            <p th:if="${#fields.hasErrors('code')}" th:errors="*{code}">Incorrect date</p>
+             <label th:text="#{addClassification.name}">Classification Name</label>
+            <input type="text" name="classification_name" th:field="*{classification_name}"/>
             <input type="submit" value="Add"/>
         </form>
         
-       <a href="setup/firmSetup.html" th:href="@{firmSetup}"
+       <a href="firmSetup.html" th:href="@{firmSetup}"
 			th:text="#{home.setup}">Firm Setup</a> 
     </body>
 </html>

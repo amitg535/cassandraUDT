@@ -17,4 +17,6 @@ public interface IFunctionResponsibilityService {
 	public List<Prescribed_FunctionDom> showPrescribedFunctions();
 	
 	public List<Responsibility> showPrescribedResponsibilities();
+	
+	public void updateFunctionsResponsibility(String functionCode, String responsibility);
 }
